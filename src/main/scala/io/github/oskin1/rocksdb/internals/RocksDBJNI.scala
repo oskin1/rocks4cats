@@ -1,7 +1,7 @@
-package com.github.oskin1.rocksdb.internals
+package io.github.oskin1.rocksdb.internals
 
 import cats.effect.{Resource, Sync}
-import com.github.oskin1.rocksdb.RocksDB
+import io.github.oskin1.rocksdb.RocksDB
 import org.{rocksdb => jrocks}
 
 class RocksDBJNI[F[_]](db: jrocks.RocksDB)(implicit F: Sync[F]) extends RocksDB[F] {

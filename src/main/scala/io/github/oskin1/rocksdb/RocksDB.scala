@@ -1,4 +1,4 @@
-package com.github.oskin1.rocksdb
+package io.github.oskin1.rocksdb
 
 import cats.effect.{Resource, Sync}
 

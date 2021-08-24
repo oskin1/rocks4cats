@@ -1,7 +1,7 @@
-package com.github.oskin1.rocksdb
+package io.github.oskin1.rocksdb
 
 import cats.effect.{Concurrent, Resource, Sync}
-import com.github.oskin1.rocksdb.internals.Transaction
+import io.github.oskin1.rocksdb.internals.Transaction
 
 trait TxRocksDB[F[_]] extends RocksDB[F] {
 
