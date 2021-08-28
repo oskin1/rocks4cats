@@ -13,6 +13,6 @@ trait RocksDB[F[_]] {
 
 object RocksDB {
 
-  def make[I[_]: Sync, F[_]: Sync](path: String): Resource[I, RocksDB[F]] =
-    internals.RocksDBJNI.make[I, F](path)
+  def make[I[_]: Sync, F[_]: Sync](path: String, createIfMissing: Boolean = true): Resource[I, RocksDB[F]] =
+    internals.RocksDBJNI.make[I, F](path, createIfMissing)
 }

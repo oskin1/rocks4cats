@@ -1,4 +1,4 @@
-package io.github.oskin1.rocksdb.internals
+package io.github.oskin1.rocksdb
 
 import cats.effect.concurrent.Semaphore
 import cats.effect.{Concurrent, Resource, Sync}
