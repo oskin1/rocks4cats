@@ -1,7 +1,8 @@
 package io.github.oskin1.rocksdb.scodec
 
 import cats.data.OptionT
-import cats.effect.{Concurrent, Resource, Sync}
+import cats.effect.kernel.Async
+import cats.effect.{Resource, Sync}
 import cats.syntax.flatMap._
 import cats.syntax.functor._
 import cats.{MonadThrow, Show}
@@ -41,7 +42,7 @@ object Transaction {
 
   def apply[F[_]: MonadThrow](tx: RawTransaction[F]): Transaction[F] = new Live(tx)
 
-  def begin[I[_], F[_]: Concurrent](db: jrocks.TransactionDB, opts: jrocks.WriteOptions)(implicit
+  def begin[I[_], F[_]: Async](db: jrocks.TransactionDB, opts: jrocks.WriteOptions)(implicit
     I: Sync[I]
   ): Resource[I, Transaction[F]] =
     RawTransaction.begin[I, F](db, opts).map(new Live(_))

@@ -1,11 +1,12 @@
 package io.github.oskin1.rocksdb.internals
 
-import cats.effect.{Concurrent, Resource, Sync}
+import cats.effect.kernel.Async
+import cats.effect.{Resource, Sync}
 import io.github.oskin1.rocksdb.{Transaction, TxRocksDB}
 import org.rocksdb.TransactionDB
 import org.{rocksdb => jrocks}
 
-final private[rocksdb] class TxRocksDBJNI[F[_]: Concurrent](db: jrocks.TransactionDB)
+final private[rocksdb] class TxRocksDBJNI[F[_]: Async](db: jrocks.TransactionDB)
   extends RocksDBJNI[F](db)
   with TxRocksDB[F] {
 
@@ -15,7 +16,7 @@ final private[rocksdb] class TxRocksDBJNI[F[_]: Concurrent](db: jrocks.Transacti
 
 object TxRocksDBJNI {
 
-  def make[I[_], F[_]: Concurrent](path: String, createIfMissing: Boolean)(implicit
+  def make[I[_], F[_]: Async](path: String, createIfMissing: Boolean)(implicit
     I: Sync[I]
   ): Resource[I, TxRocksDBJNI[F]] =
     for {
