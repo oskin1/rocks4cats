@@ -1,7 +1,8 @@
 package io.github.oskin1.rocksdb
 
-import cats.effect.concurrent.Semaphore
-import cats.effect.{Concurrent, Resource, Sync}
+import cats.effect.kernel.Async
+import cats.effect.std.Semaphore
+import cats.effect.{Resource, Sync}
 import org.{rocksdb => jrocks}
 
 trait Transaction[F[_]] {
@@ -33,8 +34,8 @@ trait Transaction[F[_]] {
 
 object Transaction {
 
-  def begin[I[_], F[_]: Concurrent](db: jrocks.TransactionDB, opts: jrocks.WriteOptions)(implicit
-    I: Sync[I]
+  def begin[I[_], F[_]: Async](db: jrocks.TransactionDB, opts: jrocks.WriteOptions)(implicit
+                                                                                    I: Sync[I]
   ): Resource[I, Transaction[F]] =
     for {
       semaphore <- Resource.eval(Semaphore.in[I, F](1))
@@ -54,6 +55,7 @@ object Transaction {
 
     def rollback: F[Unit] = delayPermitted(tx.rollback())
 
-    def delayPermitted[A](thunk: => A): F[A] = semaphore.withPermit(F.delay(thunk))
+    def delayPermitted[A](thunk: => A): F[A] =
+      semaphore.permit.use(_ => F.delay(thunk))
   }
 }

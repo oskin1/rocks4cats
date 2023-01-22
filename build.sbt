@@ -7,7 +7,7 @@ lazy val supportedScalaVersions = List(scala213, scala212)
 
 lazy val commonSettings = List(
   name := "rocks4cats",
-  version := "0.1.3",
+  version := "0.2.1",
   organization := "io.github.oskin1",
   scalaVersion := scala213,
   crossScalaVersions := supportedScalaVersions
@@ -40,8 +40,8 @@ lazy val core = project
   .settings(commonSettings ++ publishingSettings)
   .settings(
     libraryDependencies ++= List(
-      "org.typelevel" %% "cats-effect" % "2.5.3",
-      "org.rocksdb"    % "rocksdbjni"  % "6.22.1"
+      "org.typelevel" %% "cats-effect" % "3.4.2",
+      "org.rocksdb"    % "rocksdbjni"  % "7.0.3"
     )
   )
 
