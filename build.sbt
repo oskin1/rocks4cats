@@ -2,12 +2,12 @@ import sbt.Keys.{crossScalaVersions, version}
 import xerial.sbt.Sonatype.GitHubHosting
 
 lazy val scala212               = "2.12.14"
-lazy val scala213               = "2.13.6"
+lazy val scala213               = "2.13.12"
 lazy val supportedScalaVersions = List(scala213, scala212)
 
 lazy val commonSettings = List(
   name := "rocks4cats",
-  version := "0.2.1",
+  version := "0.2.2",
   organization := "io.github.oskin1",
   scalaVersion := scala213,
   crossScalaVersions := supportedScalaVersions
