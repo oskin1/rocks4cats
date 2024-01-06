@@ -11,6 +11,7 @@ target
 /target/
 /project/target/
 /project/project/target
+.bsp/sbt.json
 
 .vscode/
 project/metals.sbt
